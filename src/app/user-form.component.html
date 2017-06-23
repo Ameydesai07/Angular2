@@ -1,0 +1,42 @@
+<div class="container">
+  <h1>User Template Driven Form</h1>
+  <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" id="firstName" required
+          [(ngModel)]="model.firstName" name="firstName" #firstName="ngModel" minlength="3">
+    </div>
+    <div *ngIf="firstName.touched && firstName.errors">
+      <div class="alert alert-danger" *ngIf="firstName.errors.required">
+        First name is required
+      </div>
+      <div class="alert alert-danger" *ngIf="firstName.errors.minlength">
+        First name should be of minimum length of 3
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" required
+       name="email" [(ngModel)]="model.email" #email="ngModel">
+    </div>
+    <div class="alert alert-danger" *ngIf="email.touched && !email.valid">
+      Email is required.
+    </div>
+    <div class="form-group">
+      <label for="country">Country</label>
+      <select class="form-control" id="country"  name="country" [(ngModel)]="model.country">
+        <option *ngFor="let c of countries" [value]="c">{{c}}</option>
+      </select>
+    </div>
+    <button [disabled]="!userForm.form.valid" type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <div [hidden]="!submitted">
+    Form details
+    First Name: {{model.firstName}}
+    Email: {{model.email}}
+    Counrty: {{model.country}}
+    <button class="btn btn-primary" (click)="submitted=false"> Remove </button>
+  </div>
+</div>
+
+
